@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { FilePlus2, Send } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function CreateAssignment() {
   const { apiFetch } = useAuth();
@@ -42,15 +43,12 @@ export default function CreateAssignment() {
 
   return (
     <div className="flex-1 p-6 md:p-8 flex flex-col gap-6">
-      <div>
-        <h2 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
-          <FilePlus2 className="w-8 h-8 text-brand-400" />
-          Draft Evaluation Task
-        </h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Publish a new assignment or homework challenge. This broadcast sends instant alerts to all enrolled students.
-        </p>
-      </div>
+      <PageHeader
+        label="New Task"
+        icon={FilePlus2}
+        title="Draft Evaluation Task"
+        subtitle="Publish a new assignment or homework challenge. This broadcast sends instant alerts to all enrolled students."
+      />
 
       <div className="glass-panel p-6 rounded-3xl border border-slate-800/80 max-w-2xl">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">

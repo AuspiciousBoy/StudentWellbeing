@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Shield, Mail, Lock, User as UserIcon, BookOpen, Layers } from 'lucide-react';
+import { Shield, Mail, Lock, User as UserIcon, BookOpen, Layers, ChevronDown } from 'lucide-react';
+import LoginSplash from '../components/LoginSplash';
+
+function AnimatedTitle({ text, accentFrom = 7 }) {
+  return (
+    <h1 className="font-display text-6xl xl:text-7xl font-bold leading-[1.05] mb-6 overflow-hidden">
+      {text.split('').map((char, i) => (
+        <span
+          key={`${char}-${i}`}
+          className={`login-hero-title-char ${i >= accentFrom ? 'text-gradient' : ''}`}
+          style={{ animationDelay: `${0.5 + i * 0.06}s` }}
+        >
+          {char}
+        </span>
+      ))}
+    </h1>
+  );
+}
 
 export default function Login() {
   const { login, register } = useAuth();
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [splashDone, setSplashDone] = useState(false);
 
-  // Form states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -42,184 +59,221 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center px-4 relative overflow-hidden">
-      {/* Background ambient glows - Beautiful Indigo & Cyan */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <>
+      <LoginSplash onComplete={() => setSplashDone(true)} />
 
-      <div className="w-full max-w-lg z-10">
-        {/* Title branding */}
-        <div className="text-center mb-8">
-          <div className="inline-flex w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-cyan-500 items-center justify-center font-black text-white text-3xl shadow-xl mb-4">
-            S
-          </div>
-          <h2 className="text-4xl font-extrabold tracking-tight text-white">
-            Student<span className="text-gradient">Well</span>
-          </h2>
-          <p className="text-sm text-slate-400 mt-2 font-medium">
-            Adaptive Learning & Student Wellbeing Portal
-          </p>
+      <div
+        className={`min-h-screen flex relative overflow-hidden transition-opacity duration-700 ${
+          splashDone ? 'opacity-100' : 'opacity-0'
+        }`}
+        style={{ background: '#0a0a0a' }}
+      >
+        {/* Background watermark */}
+        <div
+          className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none font-display font-bold leading-none opacity-[0.03]"
+          style={{ fontSize: 'clamp(12rem, 30vw, 28rem)', color: '#c9a96e' }}
+          aria-hidden="true"
+        >
+          SW
         </div>
 
-        {/* Form Container */}
-        <div className="card-elegant rounded-2xl p-8 border border-slate-700 shadow-lg">
-          {/* Header tabs */}
-          <div className="flex border-b border-slate-700 mb-6">
-            <button
-              onClick={() => {
-                setIsRegister(false);
-                setError('');
-              }}
-              className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-all ${
-                !isRegister 
-                  ? 'border-indigo-500 text-white' 
-                  : 'border-transparent text-slate-500 hover:text-slate-300'
-              }`}
-            >
-              Sign In
-            </button>
-            <button
-              onClick={() => {
-                setIsRegister(true);
-                setError('');
-              }}
-              className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-all ${
-                isRegister 
-                  ? 'border-indigo-500 text-white' 
-                  : 'border-transparent text-slate-500 hover:text-slate-300'
-              }`}
-            >
-              Register
-            </button>
+        {/* Left hero panel */}
+        <div className="hidden lg:flex flex-col justify-center w-1/2 px-16 xl:px-24 relative z-10">
+          <div className="login-hero-label">
+            <span className="login-hero-label__line" />
+            <span className="login-hero-label__text">Student Portal — 2025</span>
           </div>
 
-          {error && (
-            <div className="mb-4 bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-xl p-4 font-semibold">
-              {error}
-            </div>
-          )}
+          <AnimatedTitle text="StudentWell" accentFrom={7} />
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {isRegister && (
-              <div>
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1.5 pl-1">
-                  Full Name
-                </label>
-                <div className="relative">
-                  <UserIcon className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Enter your full name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-slate-900/60 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
-                  />
+          <p
+            className="text-brand-400 text-sm font-medium tracking-wide mb-4 uppercase login-hero-content--delayed"
+            style={{ animationDelay: '1.2s' }}
+          >
+            Adaptive Learning & Wellbeing
+          </p>
+
+          <p
+            className="text-neutral-400 text-sm leading-relaxed max-w-md login-hero-content--delayed"
+            style={{ animationDelay: '1.35s' }}
+          >
+            A premium educational platform that helps students improve academic performance
+            and mental wellbeing through personalized learning, analytics, and AI assistance.
+          </p>
+
+          <div
+            className="flex items-center gap-6 mt-12 login-hero-content--delayed"
+            style={{ animationDelay: '1.5s' }}
+          >
+            <div className="gold-line w-8" />
+            <span className="section-label">Sign in to continue →</span>
+          </div>
+        </div>
+
+        {/* Right form panel */}
+        <div className="flex-1 flex flex-col justify-center items-center px-6 py-12 relative z-10 login-hero-content">
+          <div className="lg:hidden text-center mb-8">
+            <div className="login-hero-label justify-center">
+              <span className="login-hero-label__line" />
+              <span className="login-hero-label__text">Student Portal</span>
+            </div>
+            <h2 className="font-display text-4xl font-bold overflow-hidden">
+              {'StudentWell'.split('').map((char, i) => (
+                <span
+                  key={`m-${char}-${i}`}
+                  className={`login-hero-title-char ${i >= 7 ? 'text-gradient' : ''}`}
+                  style={{ animationDelay: `${0.5 + i * 0.06}s` }}
+                >
+                  {char}
+                </span>
+              ))}
+            </h2>
+          </div>
+
+          <div className="w-full max-w-md">
+            <div className="card-elegant p-8 lg:p-10">
+              <div className="flex gap-8 border-b border-white/10 mb-8">
+                <button
+                  onClick={() => { setIsRegister(false); setError(''); }}
+                  className={`pb-3 text-xs font-semibold uppercase tracking-widest border-b transition-all ${
+                    !isRegister
+                      ? 'border-brand-400 text-white'
+                      : 'border-transparent text-neutral-500 hover:text-neutral-300'
+                  }`}
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => { setIsRegister(true); setError(''); }}
+                  className={`pb-3 text-xs font-semibold uppercase tracking-widest border-b transition-all ${
+                    isRegister
+                      ? 'border-brand-400 text-white'
+                      : 'border-transparent text-neutral-500 hover:text-neutral-300'
+                  }`}
+                >
+                  Register
+                </button>
+              </div>
+
+              {error && (
+                <div className="mb-5 bg-red-950/40 border border-red-800/40 text-red-400 text-xs p-4 font-medium">
+                  {error}
                 </div>
-              </div>
-            )}
+              )}
 
-            <div>
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1.5 pl-1">
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500" />
-                <input
-                  type="email"
-                  required
-                  placeholder="name@university.edu"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-900/60 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1.5 pl-1">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500" />
-                <input
-                  type="password"
-                  required
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-900/60 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
-                />
-              </div>
-            </div>
-
-            {isRegister && (
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1.5 pl-1">
-                    Your Role
-                  </label>
-                  <div className="relative">
-                    <Shield className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500" />
-                    <select
-                      value={role}
-                      onChange={(e) => setRole(e.target.value)}
-                      className="w-full bg-slate-900/60 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm text-slate-300 focus:outline-none focus:border-indigo-500 transition-all appearance-none cursor-pointer"
-                    >
-                      <option value="student">Student</option>
-                      <option value="faculty">Faculty</option>
-                      <option value="admin">Administrator</option>
-                    </select>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                {isRegister && (
+                  <div>
+                    <label className="section-label block mb-2">Full Name</label>
+                    <div className="input-icon-wrap relative">
+                      <UserIcon className="input-icon" />
+                      <input
+                        type="text"
+                        required
+                        placeholder="Enter your full name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="input-luxury"
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div>
-                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1.5 pl-1">
-                    Department
-                  </label>
-                  <div className="relative">
-                    <BookOpen className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500" />
+                  <label className="section-label block mb-2">Email Address</label>
+                  <div className="input-icon-wrap relative">
+                    <Mail className="input-icon" />
                     <input
-                      type="text"
-                      placeholder="e.g. CS, EE"
-                      value={department}
-                      onChange={(e) => setDepartment(e.target.value)}
-                      className="w-full bg-slate-900/60 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
+                      type="email"
+                      required
+                      placeholder="name@university.edu"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="input-luxury"
                     />
                   </div>
                 </div>
-              </div>
-            )}
 
-            {isRegister && role === 'student' && (
-              <div>
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1.5 pl-1">
-                  Current Semester
-                </label>
-                <div className="relative">
-                  <Layers className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500" />
-                  <input
-                    type="number"
-                    min="1"
-                    max="8"
-                    value={semester}
-                    onChange={(e) => setSemester(e.target.value)}
-                    className="w-full bg-slate-900/60 border border-slate-800 rounded-xl py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-indigo-500 transition-all"
-                  />
+                <div>
+                  <label className="section-label block mb-2">Password</label>
+                  <div className="input-icon-wrap relative">
+                    <Lock className="input-icon" />
+                    <input
+                      type="password"
+                      required
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="input-luxury"
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/35 transition-all text-sm mt-4 cursor-pointer disabled:opacity-50"
-            >
-              {loading ? 'Processing...' : isRegister ? 'Create Account' : 'Sign In'}
-            </button>
-          </form>
+                {isRegister && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="section-label block mb-2">Your Role</label>
+                      <div className="input-icon-wrap input-icon-wrap--select relative">
+                        <Shield className="input-icon" />
+                        <select
+                          value={role}
+                          onChange={(e) => setRole(e.target.value)}
+                          className="input-luxury appearance-none w-full"
+                        >
+                          <option value="student">Student</option>
+                          <option value="faculty">Faculty</option>
+                          <option value="admin">Administrator</option>
+                        </select>
+                        <ChevronDown className="input-chevron" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="section-label block mb-2">Department</label>
+                      <div className="input-icon-wrap relative">
+                        <BookOpen className="input-icon" />
+                        <input
+                          type="text"
+                          placeholder="e.g. CS, EE"
+                          value={department}
+                          onChange={(e) => setDepartment(e.target.value)}
+                          className="input-luxury"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {isRegister && role === 'student' && (
+                  <div>
+                    <label className="section-label block mb-2">Current Semester</label>
+                    <div className="input-icon-wrap relative">
+                      <Layers className="input-icon" />
+                      <input
+                        type="number"
+                        min="1"
+                        max="8"
+                        value={semester}
+                        onChange={(e) => setSemester(e.target.value)}
+                        className="input-luxury"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="btn-elegant btn-primary w-full mt-2 cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {loading ? 'Processing...' : isRegister ? 'Create Account' : 'Sign In'}
+                  {!loading && <span className="text-base">→</span>}
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

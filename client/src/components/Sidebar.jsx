@@ -6,7 +6,6 @@ import {
   FileCheck,
   Trophy,
   GraduationCap,
-  CalendarDays,
   FilePlus2,
   Users,
   BarChart3,
@@ -19,11 +18,11 @@ export default function Sidebar({ currentView, setCurrentView, mobileOpen, onClo
 
   const menuItems = {
     student: [
-      { id: 'dashboard',    name: 'Dashboard',       icon: LayoutDashboard },
-      { id: 'analytics',    name: 'Analytics',        icon: BarChart3 },
-      { id: 'study-center', name: 'Study Center & AI', icon: BookOpen },
-      { id: 'assignments',  name: 'Assignments',      icon: FileCheck },
-      { id: 'profile',      name: 'Achievements',     icon: Trophy },
+      { id: 'dashboard',    name: 'Dashboard',        icon: LayoutDashboard },
+      { id: 'analytics',    name: 'Analytics',         icon: BarChart3 },
+      { id: 'study-center', name: 'Study Center & AI',  icon: BookOpen },
+      { id: 'assignments',  name: 'Assignments',       icon: FileCheck },
+      { id: 'profile',      name: 'Achievements',      icon: Trophy },
     ],
     faculty: [
       { id: 'faculty-dashboard',  name: 'Faculty Panel',       icon: LayoutDashboard },
@@ -39,48 +38,52 @@ export default function Sidebar({ currentView, setCurrentView, mobileOpen, onClo
 
   const handleNav = (id) => {
     setCurrentView(id);
-    if (onClose) onClose();  // close mobile drawer on navigate
+    if (onClose) onClose();
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full p-5">
-      {/* Mobile close button */}
-      <div className="flex items-center justify-between mb-6 md:hidden">
-        <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Navigation</span>
-        <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-500 hover:text-slate-300 transition-all">
+    <div className="flex flex-col h-full p-6">
+      <div className="flex items-center justify-between mb-8 md:hidden">
+        <span className="section-label">Navigation</span>
+        <button onClick={onClose} className="p-1.5 text-neutral-600 hover:text-brand-400 transition-all">
           <X className="w-4 h-4" />
         </button>
       </div>
 
-      <span className="hidden md:block text-[10px] text-slate-500 font-black uppercase tracking-widest pl-3 mb-3">Navigation</span>
+      <div className="gold-line w-8 mb-6 hidden md:block" />
+      <span className="hidden md:block section-label mb-6">Menu</span>
 
-      <div className="flex flex-col gap-1.5">
-        {currentMenu.map(({ id, name, icon: Icon }) => {
+      <div className="flex flex-col gap-1">
+        {currentMenu.map(({ id, name, icon: Icon }, index) => {
           const isActive = currentView === id;
+          const num = String(index + 1).padStart(2, '0');
           return (
             <button
               key={id}
               onClick={() => handleNav(id)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-left w-full ${
+              className={`group flex items-center gap-3 px-4 py-3.5 text-sm font-medium transition-all duration-300 text-left w-full border-l-2 ${
                 isActive
-                  ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/25'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/70'
+                  ? 'border-brand-400 bg-brand-500/8 text-white'
+                  : 'border-transparent text-neutral-500 hover:text-white hover:border-brand-400/40 hover:bg-white/3'
               }`}
             >
-              <Icon className={`w-4.5 h-4.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-500'}`} />
-              {name}
+              <span className={`nav-number ${isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-80'}`}>
+                {num}
+              </span>
+              <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-brand-400' : 'text-neutral-600 group-hover:text-brand-400/70'}`} />
+              <span className="tracking-wide">{name}</span>
             </button>
           );
         })}
       </div>
 
-      {/* Bottom hint card */}
-      <div className="mt-auto pt-6">
-        <div className="bg-slate-900/60 border border-slate-800/60 rounded-xl p-4">
-          <h5 className="text-[11px] font-bold text-slate-300">
+      <div className="mt-auto pt-8">
+        <div className="gold-line-full mb-4" />
+        <div className="p-4 border border-white/8 bg-white/2">
+          <h5 className="text-[11px] font-semibold text-brand-400 uppercase tracking-widest">
             {user.role === 'student' ? 'Need help?' : 'Quick Tip'}
           </h5>
-          <p className="text-[10px] text-slate-500 mt-1 leading-relaxed">
+          <p className="text-[10px] text-neutral-600 mt-2 leading-relaxed">
             {user.role === 'student'
               ? 'Visit the Study Center to chat with the AI tutor or ask questions about uploaded PDFs.'
               : user.role === 'faculty'
@@ -94,19 +97,17 @@ export default function Sidebar({ currentView, setCurrentView, mobileOpen, onClo
 
   return (
     <>
-      {/* Desktop sidebar */}
-      <aside className="w-64 card-elegant border-r border-slate-700 hidden md:flex flex-col min-h-[calc(100vh-73px)] rounded-none">
+      <aside className="w-64 border-r border-white/8 hidden md:flex flex-col min-h-[calc(100vh-65px)] bg-surface-400/50">
         <SidebarContent />
       </aside>
 
-      {/* Mobile slide-over overlay */}
       {mobileOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm"
+            className="fixed inset-0 bg-black/70 z-40 md:hidden backdrop-blur-sm"
             onClick={onClose}
           />
-          <aside className="fixed top-0 left-0 h-full w-72 card-elegant border-r border-slate-700 z-50 md:hidden flex flex-col shadow-xl rounded-none">
+          <aside className="fixed top-0 left-0 h-full w-72 bg-surface-300 border-r border-white/10 z-50 md:hidden flex flex-col shadow-gold-lg">
             <SidebarContent />
           </aside>
         </>

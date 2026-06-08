@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import StatCard from '../../components/StatCard';
+import PageHeader from '../../components/PageHeader';
 import { Users, FileCode, Calendar, Smile, ShieldAlert, Edit2, Trash2 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -91,15 +92,11 @@ export default function AdminDashboard() {
 
   return (
     <div className="flex-1 p-6 md:p-8 flex flex-col gap-8">
-      {/* Header */}
-      <div>
-        <h2 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
-          Admin Operations Hub
-        </h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Monitor system metrics, review emotional wellbeing trends, and audit user permissions.
-        </p>
-      </div>
+      <PageHeader
+        label="Administration"
+        title="Admin Operations Hub"
+        subtitle="Monitor system metrics, review emotional wellbeing trends, and audit user permissions."
+      />
 
       {/* Stats row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import StatCard from '../../components/StatCard';
+import PageHeader from '../../components/PageHeader';
 import { 
   Users, 
   FileText, 
@@ -128,13 +129,11 @@ export default function FacultyDashboard() {
 
   return (
     <div className="flex-1 p-6 md:p-8 flex flex-col gap-8">
-      {/* Header */}
-      <div>
-        <h2 className="text-3xl font-extrabold text-white tracking-tight">Faculty Dashboard</h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Monitor at-risk wellbeing logs, evaluate assignment files, and broadcast updates.
-        </p>
-      </div>
+      <PageHeader
+        label="Faculty Panel"
+        title="Faculty Dashboard"
+        subtitle="Monitor at-risk wellbeing logs, evaluate assignment files, and broadcast updates."
+      />
 
       {/* Counters */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

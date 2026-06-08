@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import PageHeader from '../../components/PageHeader';
 import { GraduationCap, CalendarDays, Award, User as UserIcon, Send } from 'lucide-react';
 
 export default function GradesAttendance() {
@@ -113,16 +114,12 @@ export default function GradesAttendance() {
 
   return (
     <div className="flex-1 p-6 md:p-8 flex flex-col gap-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
-          <GraduationCap className="w-8 h-8 text-brand-400" />
-          Grades & Attendance Registry
-        </h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Select a student to log class attendance or post grades for exams.
-        </p>
-      </div>
+      <PageHeader
+        label="Registry"
+        icon={GraduationCap}
+        title="Grades & Attendance"
+        subtitle="Select a student to log class attendance or post grades for exams."
+      />
 
       {students.length === 0 ? (
         <div className="text-center py-20 glass-panel rounded-3xl">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Trophy, Flame, Award, ShieldAlert, Sparkles } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function Profile() {
   const { user } = useAuth();
@@ -34,13 +35,17 @@ export default function Profile() {
 
   return (
     <div className="flex-1 p-6 md:p-8 flex flex-col gap-8">
-      {/* Header banner */}
-      <div className="relative glass-panel rounded-3xl p-8 border border-slate-800/80 overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+      <PageHeader
+        label="Achievements"
+        title="Your Profile"
+        subtitle="Track your progress, streaks, and unlocked achievements."
+      />
+
+      <div className="relative card-elegant p-8 overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/5 rounded-full blur-3xl pointer-events-none"></div>
         
-        {/* User Card */}
         <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-brand-600 to-wellbeing-500 flex items-center justify-center font-black text-white text-3xl shadow-xl">
+          <div className="w-20 h-20 gradient-gold flex items-center justify-center font-display font-bold text-black text-3xl shadow-gold">
             {user.name.charAt(0)}
           </div>
           <div>

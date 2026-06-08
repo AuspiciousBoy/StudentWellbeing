@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import PageHeader from '../../components/PageHeader';
 import { 
   FileCheck, 
   Calendar, 
@@ -90,14 +91,11 @@ export default function Assignments() {
 
   return (
     <div className="flex-1 p-6 md:p-8 flex flex-col gap-6">
-      <div>
-        <h2 className="text-3xl font-extrabold text-white tracking-tight">
-          Assignments & Evaluations
-        </h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Track course assessments, submit notes or scripts, and review feedback.
-        </p>
-      </div>
+      <PageHeader
+        label="Coursework"
+        title="Assignments & Evaluations"
+        subtitle="Track course assessments, submit notes or scripts, and review feedback."
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {assignments.length === 0 ? (

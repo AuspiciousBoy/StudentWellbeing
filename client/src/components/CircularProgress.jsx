@@ -11,7 +11,7 @@ export default function CircularProgress({ value, size = 120, strokeWidth = 10, 
         <svg className="w-full h-full transform -rotate-90">
           {/* Background circle */}
           <circle
-            className="stroke-slate-800"
+            className="stroke-white/10"
             fill="transparent"
             strokeWidth={strokeWidth}
             r={radius}
@@ -38,7 +38,7 @@ export default function CircularProgress({ value, size = 120, strokeWidth = 10, 
             {value}%
           </span>
           {subtitle && (
-            <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-0.5">
+            <span className="text-[9px] text-neutral-500 font-semibold uppercase tracking-widest mt-0.5">
               {subtitle}
             </span>
           )}
@@ -46,7 +46,7 @@ export default function CircularProgress({ value, size = 120, strokeWidth = 10, 
       </div>
 
       {title && (
-        <span className="text-xs font-bold text-slate-300 mt-3 uppercase tracking-wider text-center">
+        <span className="text-xs font-semibold text-neutral-400 mt-3 uppercase tracking-widest text-center">
           {title}
         </span>
       )}

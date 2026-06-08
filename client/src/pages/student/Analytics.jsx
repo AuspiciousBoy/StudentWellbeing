@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { BarChart3, TrendingUp, Heart, Calendar, Award } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 // ── Mini Bar Chart (SVG) ──────────────────────────────────────────────
 function BarChart({ data, color = '#0984e3', maxVal }) {
@@ -177,16 +178,12 @@ export default function Analytics() {
 
   return (
     <div className="flex-1 p-6 md:p-8 flex flex-col gap-8">
-      {/* Header */}
-      <div>
-        <h2 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-          <BarChart3 className="w-8 h-8 text-brand-400" />
-          Performance & Wellbeing Analytics
-        </h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Visual breakdown of your academic grades, attendance patterns, and mood trends.
-        </p>
-      </div>
+      <PageHeader
+        label="Analytics"
+        icon={BarChart3}
+        title="Performance & Wellbeing"
+        subtitle="Visual breakdown of your academic grades, attendance patterns, and mood trends."
+      />
 
       {/* ── Summary KPI row ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

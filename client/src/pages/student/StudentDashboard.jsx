@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import StatCard from '../../components/StatCard';
 import CircularProgress from '../../components/CircularProgress';
+import PageHeader from '../../components/PageHeader';
 import { 
   Smile, 
   BookOpen, 
@@ -145,15 +146,11 @@ export default function StudentDashboard() {
 
   return (
     <div className="flex-1 p-6 md:p-8 flex flex-col gap-8">
-      {/* Welcome header */}
-      <div>
-        <h2 className="text-3xl font-extrabold text-white tracking-tight">
-          Welcome back, {user.name}!
-        </h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Here is your personalized academic and wellbeing summary for today.
-        </p>
-      </div>
+      <PageHeader
+        label="Dashboard Overview"
+        title={`Welcome back, ${user.name}`}
+        subtitle="Your personalized academic and wellbeing summary for today."
+      />
 
       {/* Grid of stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

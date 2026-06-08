@@ -12,6 +12,7 @@ import {
   FileCode,
   CheckCircle2
 } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 export default function StudyCenter() {
   const { apiFetch, user } = useAuth();
@@ -192,8 +193,15 @@ export default function StudyCenter() {
   };
 
   return (
-    <div className="flex-1 p-6 md:p-8 grid grid-cols-1 xl:grid-cols-2 gap-8 min-h-[calc(100vh-80px)]">
-      
+    <div className="flex-1 p-6 md:p-8 flex flex-col gap-8 min-h-[calc(100vh-80px)]">
+      <PageHeader
+        label="Study Center"
+        icon={Bot}
+        title="AI Learning Hub"
+        subtitle="Chat with the AI tutor, upload PDFs, and get instant answers from your course materials."
+      />
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 flex-1">
       {/* LEFT MODULE - Conversational AI Assistant */}
       <div className="glass-panel rounded-3xl border border-slate-800/80 flex flex-col h-[76vh] min-h-[500px]">
         {/* Chat Header */}
@@ -454,6 +462,7 @@ export default function StudyCenter() {
         </div>
       </div>
 
+      </div>
     </div>
   );
 }

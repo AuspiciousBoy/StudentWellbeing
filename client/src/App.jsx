@@ -25,7 +25,6 @@ function DashboardShell() {
   const [currentView, setCurrentView] = useState('dashboard');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Reset view when user role changes
   useEffect(() => {
     if (user) {
       setCurrentView(
@@ -38,12 +37,13 @@ function DashboardShell() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex justify-center items-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-wellbeing-500 flex items-center justify-center font-black text-white text-2xl shadow-xl animate-pulse">
-            S
-          </div>
-          <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-brand-500" />
+      <div className="min-h-screen flex justify-center items-center" style={{ background: '#0a0a0a' }}>
+        <div className="flex flex-col items-center gap-6 animate-fade-in">
+          <span className="font-display text-4xl font-bold text-white">
+            SW<span className="text-brand-400">.</span>
+          </span>
+          <div className="animate-spin rounded-full h-5 w-5 border border-brand-400/30 border-t-brand-400" />
+          <span className="section-label">Loading portal...</span>
         </div>
       </div>
     );
@@ -64,15 +64,15 @@ function DashboardShell() {
       case 'admin-dashboard':   return <AdminDashboard />;
       default:
         return (
-          <div className="p-8 text-center text-slate-500">
-            <p className="text-sm font-semibold">Page not found: <code className="text-brand-400">{currentView}</code></p>
+          <div className="p-8 text-center text-neutral-600">
+            <p className="text-sm font-medium">Page not found: <code className="text-brand-400">{currentView}</code></p>
           </div>
         );
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: '#0a0a0a' }}>
       <Navbar
         onMobileMenuToggle={() => setMobileMenuOpen(v => !v)}
         mobileMenuOpen={mobileMenuOpen}
@@ -84,7 +84,7 @@ function DashboardShell() {
           mobileOpen={mobileMenuOpen}
           onClose={() => setMobileMenuOpen(false)}
         />
-        <main className="flex-1 flex flex-col overflow-y-auto bg-slate-950">
+        <main className="flex-1 flex flex-col overflow-y-auto">
           {renderView()}
         </main>
       </div>
